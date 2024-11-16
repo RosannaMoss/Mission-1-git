@@ -2,11 +2,14 @@ import React, { useState } from "react";
 
 function ImageClassifier() {
   const [image, setImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null); // For displaying uploaded image
   const [result, setResult] = useState("Waiting for an image...");
   const [loading, setLoading] = useState(false);
 
   const handleImageUpload = (event) => {
-    setImage(event.target.files[0]);
+    const file = event.target.files[0];
+    setImage(file);
+    setImagePreview(URL.createObjectURL(file)); // Generate preview URL
     setResult("Image uploaded. Ready to classify.");
   };
 
@@ -61,12 +64,22 @@ function ImageClassifier() {
 
   return (
     <div>
-      <h2>Upload an Image for Classification</h2>
+      <h2>Upload an image to find out your premium</h2>
       <input type="file" accept="image/*" onChange={handleImageUpload} />
+      <br></br>
+      {imagePreview && (
+        <img
+          src={imagePreview}
+          alt="Uploaded preview"
+          style={{ width: "300px", marginTop: "20px" }}
+        />
+      )}{" "}
+      <br></br>
       <button onClick={classifyImage} disabled={loading}>
         {loading ? "Classifying..." : "Classify Image"}
       </button>
-
+      {/* Display uploaded image */}
+      <br></br>
       <h3>Classification Result:</h3>
       <div>{result}</div>
     </div>
