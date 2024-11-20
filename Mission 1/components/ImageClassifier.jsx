@@ -8,9 +8,12 @@ function ImageClassifier() {
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
+    // gets the first uploaded file
     setImage(file);
+    // updates image file with the uploaded file
     setImagePreview(URL.createObjectURL(file)); // Generate preview URL
     setResult("Image uploaded. Ready to classify.");
+    // updates status message
   };
 
   const classifyImage = async () => {
@@ -18,6 +21,7 @@ function ImageClassifier() {
       setResult("Please upload an image first.");
       return;
     }
+    // checks if image has been uploaded (sends error if not)
 
     setLoading(true);
     setResult("Classifying...");
@@ -31,6 +35,7 @@ function ImageClassifier() {
             "Prediction-Key":
               "CZkqcuHmNixJ70q6tQ1JMngmK0v4iWEKFgkgetGz0G2ZiZM6I2xqJQQJ99AKACYeBjFXJ3w3AAAIACOG4cZz",
             "Content-Type": "application/octet-stream",
+            // specifies binary nature of the image date in body
           },
           body: image,
         }
@@ -47,7 +52,7 @@ function ImageClassifier() {
         const bestPrediction = data.predictions.reduce((max, prediction) =>
           prediction.probability > max.probability ? prediction : max
         );
-
+        // .reduce finds the prediction with the highest probability
         const resultText = `Class: ${bestPrediction.tagName}, Confidence: ${(
           bestPrediction.probability * 100
         ).toFixed(2)}%`;
@@ -59,6 +64,7 @@ function ImageClassifier() {
       setResult(`Error: ${error.message}`);
     } finally {
       setLoading(false);
+      // makes sure loading is set to false after the process finishes
     }
   };
 
@@ -77,6 +83,7 @@ function ImageClassifier() {
       <br></br>
       <button onClick={classifyImage} disabled={loading}>
         {loading ? "Classifying..." : "Classify Image"}
+        {/* disabled loading prevents multiple submissions while the image is being classified */}
       </button>
       {/* Display uploaded image */}
       <br></br>
