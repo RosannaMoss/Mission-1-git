@@ -24,7 +24,7 @@ function ImageClassifier() {
 
     try {
       const response = await fetch(
-        "https://motorbikeandcartraining-prediction.cognitiveservices.azure.com/customvision/v3.0/Prediction/36be089e-fc26-4556-8789-556d055a6cdd/detect/iterations/Iteration3/image",
+        "https://motorbikeandcartraining-prediction.cognitiveservices.azure.com/customvision/v3.0/Prediction/36be089e-fc26-4556-8789-556d055a6cdd/detect/iterations/Iteration4/image",
         {
           method: "POST",
           headers: {
